@@ -1,28 +1,61 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    <button @click.prevent="openMyDialog()">my button</button>
+    <button @click.prevent="testMyDialog()">my button</button>
+    <v-content>
+      <hello-world/>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import HelloWorld from './components/HelloWorld';
+import bus from './utils/bus';
 export default {
   name: 'App',
+
   components: {
     HelloWorld
-  }
-}
-</script>
+  },
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+  data: () => ({
+    //
+  }),
+
+  methods: {
+    openMyDialog () {
+      bus.$emit('dialog',
+        {
+          value: true,
+          msg: '확인되었습니다.',
+          isChoice: true,
+          okText: '확인용',
+          cancelText: '취소염',
+          confirmHandler: {
+            ok: () => {
+              console.log('ok기능')
+            },
+            cancel: () => {
+              console.log('캔슬기능')
+            }
+          }
+        }
+      )
+    },
+    testMyDialog () {
+      bus.$emit('dialog',
+        {
+          value: true,
+          msg: '뭐뭐뭐.',
+          okText: '확용',
+          confirmHandler: {
+            ok: () => {
+              console.log('ok기능인가봉가')
+            }
+          }
+        }
+      )
+    }
+  }
+};
+</script>
