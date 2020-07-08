@@ -2,6 +2,7 @@
   <v-app>
     <v-content>
       <test1/>
+      <v-icon class="material-icons-outlined">home</v-icon>
     </v-content>
     <hello-world/>
   </v-app>
