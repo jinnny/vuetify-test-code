@@ -53,12 +53,6 @@ export default {
       }
     }
   },
-  watch: {
-    dialog: function (newValue) {
-      console.log(newValue)
-      this.$emit('updateDialog', newValue.active)
-    }
-  },
   methods: {
     resetDialog () {
       console.log('reset')
