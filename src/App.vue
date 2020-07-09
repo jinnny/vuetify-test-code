@@ -10,7 +10,7 @@
 
 <script>
 import HelloWorld from './components/HelloWorld';
-import Test1 from './pages/test2';
+import Test1 from './pages/test1';
 
 export default {
   name: 'App',

@@ -1,36 +1,36 @@
 <template>
   <v-dialog
-    v-model="dialog"
+    class="layer-popup"
     width="500"
+    v-model="dialog.active"
   >
-    <v-card>
+    <v-card class="justify-center text-center">
       <v-card-title
-        class="headline grey lighten-2"
+        class="headline justify-center"
         primary-title
       >
-        {{ msgTitle }}
+        {{ dialog.msgTitle }}
       </v-card-title>
-      <v-card-text>
-        {{ msg }}
+      <v-card-text class="">
+        {{ dialog.msg }}
       </v-card-text>
-      <v-card-actions>
+      <v-card-actions class="justify-center">
+        <template v-if="dialog.isChoice">
+          <v-btn
+            depressed
+            @click="cancelModal"
+          >
+            {{ dialog.cancelText }}
+          </v-btn>
+        </template>
         <v-btn
           color="primary"
-          text
+          depressed
           @click="confirmModal"
         >
 
-          {{ okText }}
+          {{ dialog.okText }}
         </v-btn>
-        <template v-if="isChoice">
-          <v-btn
-            color="primary"
-            text
-            @click="cancelModal"
-          >
-            {{ cancelText }}
-          </v-btn>
-        </template>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -42,37 +42,59 @@
   export default {
     data () {
       return {
-        dialog: false,
-        msgTitle: '알림',
-        msg: '',
-        okText: '확인',
-        cancelText: '취소',
-        confirmHandler: null,
-        isChoice: false
+        dialog: {
+          active: false,
+          msgTitle: '알림',
+          msg: '',
+          okText: '확인',
+          cancelText: '취소',
+          confirmHandler: null,
+          isChoice: false
+        }
       }
     },
+    // watch: {
+    //   dialog: function (newValue) {
+    //     console.log(newValue)
+    //     this.$emit('updateDialog', newValue.active)
+    //   }
+    // },
     methods: {
+      resetDialog () {
+        this.dialog = {
+          active: false,
+          msgTitle: '알림',
+          msg: '',
+          okText: '확인',
+          cancelText: '취소',
+          confirmHandler: null,
+          isChoice: false
+        }
+      },
       modalContent(payload) {
-        this.dialog = payload.value;
-        this.msg = payload.msg || this.msg;
-        this.msgTitle = payload.msgTitle || this.msgTitle;
-        this.confirm = payload.confirm || this.confirm;
-        this.confirmHandler = payload.confirmHandler || this.confirmHandler;
-        this.isChoice = payload.isChoice || this.isChoice;
-        this.okText = payload.okText || this.okText;
-        this.cancelText = payload.cancelText || this.cancelText;
+        this.dialog = {
+          active: payload.dialog.active,
+          msg: payload.dialog.msg || this.dialog.msg,
+          msgTitle: payload.dialog.msgTitle || this.dialog.msgTitle,
+          confirmHandler: payload.dialog.confirmHandler || this.dialog.confirmHandler,
+          isChoice: payload.dialog.isChoice || this.dialog.isChoice,
+          okText: payload.dialog.okText || this.dialog.okText,
+          cancelText: payload.dialog.cancelText || this.dialog.cancelText
+        };
       },
       cancelModal() {
-        if (this.confirmHandler && this.confirmHandler.cancel) {
-          this.confirmHandler.cancel();
+        if (this.dialog.confirmHandler && this.dialog.confirmHandler.cancel) {
+          this.dialog.confirmHandler.cancel();
         }
-        this.dialog = false
+        this.resetDialog();
+        this.dialog.active = false
       },
       confirmModal() {
-        if (this.confirmHandler && this.confirmHandler.ok) {
-          this.confirmHandler.ok();
+        if (this.dialog.confirmHandler && this.dialog.confirmHandler.ok) {
+          this.dialog.confirmHandler.ok();
         }
-        this.dialog = false
+        this.resetDialog();
+        this.dialog.active = false
       }
     },
     beforeMount () {
@@ -83,3 +105,10 @@
     }
   }
 </script>
+<style lang="scss">
+  .layer-popup {
+    .v-card {
+      padding: 20px;
+    }
+  }
+</style>
