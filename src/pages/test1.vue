@@ -10,27 +10,24 @@
       tile
     >
       <v-list max-height="670" nav class="slide-list">
+        <v-subheader>REPORTS</v-subheader>
         <v-list-group
           v-for="item in items"
           :key="item.title"
           v-model="item.active"
           no-action
+          :ripple="false"
         >
           <template v-slot:activator>
-            <v-list-item-content>
-              <v-list-item-title v-text="item.title"></v-list-item-title>
-            </v-list-item-content>
+            <v-list-item-title v-text="item.title"></v-list-item-title>
           </template>
-
           <v-list-item
             v-for="subItem in item.items"
             :key="subItem.title"
             link
-            ripple
+            :ripple="false"
           >
-            <v-list-item-content>
-              <v-list-item-title v-text="subItem.title"></v-list-item-title>
-            </v-list-item-content>
+            <v-list-item-title v-text="subItem.title"></v-list-item-title>
           </v-list-item>
         </v-list-group>
       </v-list>
@@ -44,22 +41,22 @@
   export default {
     name: 'test1',
     data: () => ({
-      item: 1,
+      model: null,
       items: [
         {
           action: 'local_activity',
-          title: 'Attractions',
+          title: '가나다라',
           items: [
             { title: 'List Item' },
           ],
         },
         {
           action: 'restaurant',
-          title: 'Dining',
+          title: '위메프패션',
           items: [
-            { title: 'Breakfast & brunch' },
-            { title: 'New American' },
-            { title: 'Sushi' },
+            { title: '가나123' },
+            { title: '어드민' },
+            { title: '메뉴' },
           ],
         },
         {
@@ -96,147 +93,7 @@
           items: [
             { title: 'List Item' },
           ],
-        },
-        {
-          action: 'directions_run',
-          title: 'Family',
-          items: [
-            { title: 'List Item' },
-          ],
-        },
-        {
-          action: 'healing',
-          title: 'Health',
-          items: [
-            { title: 'List Item' },
-          ],
-        },
-        {
-          action: 'content_cut',
-          title: 'Office',
-          items: [
-            { title: 'List Item' },
-          ],
-        },
-        {
-          action: 'local_offer',
-          title: 'Promotions',
-          items: [
-            { title: 'List Item' },
-          ],
-        },
-        {
-          action: 'directions_run',
-          title: 'Family',
-          items: [
-            { title: 'List Item' },
-          ],
-        },
-        {
-          action: 'healing',
-          title: 'Health',
-          items: [
-            { title: 'List Item' },
-          ],
-        },
-        {
-          action: 'content_cut',
-          title: 'Office',
-          items: [
-            { title: 'List Item' },
-          ],
-        },
-        {
-          action: 'local_offer',
-          title: 'Promotions',
-          items: [
-            { title: 'List Item' },
-          ],
-        },
-        {
-          action: 'directions_run',
-          title: 'Family',
-          items: [
-            { title: 'List Item' },
-          ],
-        },
-        {
-          action: 'healing',
-          title: 'Health',
-          items: [
-            { title: 'List Item' },
-          ],
-        },
-        {
-          action: 'content_cut',
-          title: 'Office',
-          items: [
-            { title: 'List Item' },
-          ],
-        },
-        {
-          action: 'local_offer',
-          title: 'Promotions',
-          items: [
-            { title: 'List Item' },
-          ],
-        },
-        {
-          action: 'directions_run',
-          title: 'Family',
-          items: [
-            { title: 'List Item' },
-          ],
-        },
-        {
-          action: 'healing',
-          title: 'Health',
-          items: [
-            { title: 'List Item' },
-          ],
-        },
-        {
-          action: 'content_cut',
-          title: 'Office',
-          items: [
-            { title: 'List Item' },
-          ],
-        },
-        {
-          action: 'local_offer',
-          title: 'Promotions',
-          items: [
-            { title: 'List Item' },
-          ],
-        },
-        {
-          action: 'directions_run',
-          title: 'Family',
-          items: [
-            { title: 'List Item' },
-          ],
-        },
-        {
-          action: 'healing',
-          title: 'Health',
-          items: [
-            { title: 'List Item' },
-          ],
-        },
-        {
-          action: 'content_cut',
-          title: 'Office',
-          items: [
-            { title: 'List Item' },
-          ],
-        },
-        {
-          action: 'local_offer',
-          title: 'Promotions',
-          items: [
-            { title: 'List Item' },
-          ],
-        },
+        }
       ]
     }),
     methods: {
@@ -308,12 +165,36 @@
   &.v-list {
     overflow-y: auto;
     background: #fff !important;
+    .v-subheader {
+      padding: 0 12px;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .v-list-group__header {
+      padding: 0 12px;
+      .v-list-item__icon {
+        .v-icon {
+          color: #4f5663;
+        }
+      }
+    }
+    .v-list-group {
+      &--active {
+        .v-list-group__header {
+          .v-list-item__icon {
+            .v-icon {
+              color: #ffffff;
+            }
+          }
+        }
+      }
+    }
     .v-list-group__items {
       padding-left: 40px;
       position: relative;
       &:before {
         content: '';
-        height: 100%;
+        height: calc(100% - 10px);
         width: 1px;
         background: #cccccc;
         display: block;
@@ -322,6 +203,16 @@
         top: 10px;
       }
       .v-list-item {
+        min-height: 32px;
+        &:first-child {
+          padding-top: 10px;
+        }
+        .v-list-item__content {
+          padding: 8px 0;
+        }
+        .v-list-item__title {
+          color: #4f5663;
+        }
         &.v-list-item--link {
           padding-left: 0;
           &:hover {
@@ -341,8 +232,10 @@
         }
         .v-list-item__title {
           color: #777;
+          font-size: 0.95rem;
+          line-height: 1.5;
           &:hover {
-            color: #4545;
+            color: #444;
             font-weight: 600;
           }
         }
