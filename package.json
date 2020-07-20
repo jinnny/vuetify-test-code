@@ -13,6 +13,8 @@
     "vue": "^2.6.11",
     "vue-awesome-swiper": "^4.1.1",
     "vue-cookies": "^1.7.2",
+    "vue-fragment": "^1.5.1",
+    "vue-loading-skeleton": "^1.1.9",
     "vuetify": "^2.2.11"
   },
   "devDependencies": {

@@ -1,8 +1,6 @@
 <template>
   <div>
-    <button @click.prevent="openMyDialog()">my button</button><br>
-    <button @click.prevent="testMyDialog()">my button test2</button>
-
+    <button @click.prevent="loading = !loading">my button</button>
     <v-card
       style="background: #ccc;"
       class="mx-auto"
@@ -19,8 +17,8 @@
           :ripple="false"
         >
           <template v-slot:activator>
-            <v-list-item-title v-if="item.title" v-text="item.title"></v-list-item-title>
-            <PuSkeleton v-else width="196px"/>
+            <PuSkeleton v-if="loading" width="196px"/>
+            <v-list-item-title v-else v-text="item.title"></v-list-item-title>
           </template>
           <v-list-item
             v-for="subItem in item.items"
@@ -29,8 +27,8 @@
             :ripple="false"
           >
             <template >
-              <v-list-item-title v-if="subItem.title" v-text="subItem.title"></v-list-item-title>
-              <PuSkeleton v-else  width="196px" :count="2" />
+              <PuSkeleton v-if="loading" width="196px"/>
+              <v-list-item-title v-else v-text="subItem.title"></v-list-item-title>
             </template>
 
           </v-list-item>
